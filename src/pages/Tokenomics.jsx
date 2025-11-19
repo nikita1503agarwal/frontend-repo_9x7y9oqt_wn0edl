@@ -1,6 +1,10 @@
 import Navbar from '../components/Navbar'
+import { motion } from 'framer-motion'
 
 const colors = { bg: '#0A1A2F', ocean: '#0F2F45', aqua: '#00AEEF', turquoise: '#32D5FF', cyan: '#00E4FF', white: '#FFFFFF' }
+
+const container = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.12 } } }
+const item = { hidden: { opacity: 0, y: 16 }, visible: { opacity: 1, y: 0, transition: { duration: 0.55 } } }
 
 const allocations = [
   { label: 'Fondateur (vesting)', value: 10 },
@@ -14,26 +18,25 @@ export default function Tokenomics() {
   return (
     <div className="min-h-screen" style={{ backgroundColor: colors.bg }}>
       <Navbar />
-      <section className="max-w-7xl mx-auto px-6 py-16">
-        <h1 className="text-4xl font-bold text-white mb-4">Tokenomics</h1>
-        <p className="text-white/80 mb-10 max-w-2xl">Répartition transparente des HWV avec un design bleu/aqua.</p>
+      <motion.section initial="hidden" animate="visible" variants={container} className="max-w-7xl mx-auto px-6 py-16">
+        <motion.h1 variants={item} className="text-4xl font-bold text-white mb-4">Tokenomics</motion.h1>
+        <motion.p variants={item} className="text-white/80 mb-10 max-w-2xl">Répartition transparente des HWV avec un design bleu/aqua.</motion.p>
 
         <div className="grid lg:grid-cols-2 gap-10">
-          <div className="p-6 rounded-2xl border" style={{ borderColor: 'rgba(50,213,255,0.2)', background: 'linear-gradient(180deg, rgba(15,47,69,0.35), rgba(10,26,47,0.6))' }}>
+          <motion.div variants={item} className="p-6 rounded-2xl border" style={{ borderColor: 'rgba(50,213,255,0.2)', background: 'linear-gradient(180deg, rgba(15,47,69,0.35), rgba(10,26,47,0.6))' }}>
             <h2 className="text-white font-semibold mb-4">Répartition</h2>
             <ul className="space-y-3">
               {allocations.map((a, i) => (
-                <li key={i} className="flex items-center justify-between text-white/90">
+                <motion.li variants={item} key={i} className="flex items-center justify-between text-white/90">
                   <span>{a.label}</span>
                   <span>{a.value}%</span>
-                </li>
+                </motion.li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="p-6 rounded-2xl border flex items-center justify-center" style={{ borderColor: 'rgba(50,213,255,0.2)', background: 'linear-gradient(180deg, rgba(15,47,69,0.35), rgba(10,26,47,0.6))' }}>
-            <div className="relative w-72 h-72">
-              {/* Donut chart using pure CSS conic-gradient */}
+          <motion.div variants={item} className="p-6 rounded-2xl border flex items-center justify-center" style={{ borderColor: 'rgba(50,213,255,0.2)', background: 'linear-gradient(180deg, rgba(15,47,69,0.35), rgba(10,26,47,0.6))' }}>
+            <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.6 }} className="relative w-72 h-72">
               <div
                 className="w-72 h-72 rounded-full"
                 style={{
@@ -48,10 +51,10 @@ export default function Tokenomics() {
                   <div className="text-white/70 text-sm">HypeWave•X</div>
                 </div>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
     </div>
   )
 }
